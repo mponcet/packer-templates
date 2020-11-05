@@ -57,7 +57,10 @@
   "provisioners": [
     {
       "type": "shell",
-      "inline": [ "echo 'Packer Template Build: DONE'" ]
+      "inline": [
+	"sudo truncate -s 0 /etc/machine-id",
+	"echo 'Packer Template Build: DONE'"
+      ]
     }
   ]
 }
