@@ -3,7 +3,7 @@ autoinstall:
   version: 1
   early-commands: # prevent packer from	connecting
     - systemctl stop ssh
-  locale: en_US.UTF8
+  locale: en_US
   keyboard:
     layout: fr
   network:
