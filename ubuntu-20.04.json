@@ -51,14 +51,17 @@
       "http_directory": "http",
       "ssh_username": "{{user `ssh-username`}}",
       "ssh_password": "{{user `ssh-password`}}",
+      "ssh_pty": true,
       "ssh_timeout": "30m"
     }
   ],
   "provisioners": [
     {
       "type": "shell",
+      "inline_shebang": "/bin/bash -e",
       "inline": [
 	"while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done",
+	"echo -e '[Unit]\nAfter=dbus.service' | sudo SYSTEMD_EDITOR=tee systemctl edit open-vm-tools.service",
 	"sudo truncate -s 0 /etc/machine-id",
 	"echo 'Packer Template Build: DONE'"
       ]
