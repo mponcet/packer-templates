@@ -1,6 +1,8 @@
 #cloud-config
 autoinstall:
   version: 1
+  refresh_installer:
+    update: yes
   early-commands: # prevent packer from	connecting
     - systemctl stop ssh
   locale: en_US
