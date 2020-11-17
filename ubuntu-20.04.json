@@ -48,7 +48,7 @@
         "<enter><wait>"
       ],
       "shutdown_command": "sudo shutdown -P now",
-      "http_directory": "http",
+      "http_directory": "http_ubuntu2004",
       "ssh_username": "{{user `ssh-username`}}",
       "ssh_password": "{{user `ssh-password`}}",
       "ssh_pty": true,
