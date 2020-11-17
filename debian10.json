@@ -1,0 +1,74 @@
+{
+  "builders": [
+    {
+      "vm_name": "debian-10-template",
+
+      "type": "vsphere-iso",
+      "vcenter_server": "{{user `vcenter-server`}}",
+      "username": "{{user `vcenter-username`}}",
+      "password": "{{user `vcenter-password`}}",
+      "insecure_connection": "{{user `insecure-connection`}}",
+
+      "cluster": "[[user `cluster`}}",
+      "datacenter": "{{user `datacenter`}}",
+      "datastore": "{{user `datastore`}}",
+      "folder": "{{user `folder`}}",
+
+      "guest_os_type": "ubuntu64Guest",
+      "convert_to_template": true,
+
+      "boot_order": "disk,cdrom",
+      "CPUs": 1,
+      "RAM": 1024,
+      "RAM_reserve_all": true,
+      "disk_controller_type": "pvscsi",
+      "storage": [
+        {
+          "disk_size": "{{user `vm-disk-size`}}",
+	  "disk_thin_provisioned": true
+	}
+      ],
+      "network_adapters": [
+        {
+          "network": "{{user `network`}}",
+	  "network_card": "vmxnet3"
+	}
+      ],
+
+      "iso_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.6.0-amd64-netinst.iso",
+      "iso_checksum": "2af8f43d4a7ab852151a7f630ba596572213e17d3579400b5648eba4cc974ed0",
+
+      "boot_wait": "5s",
+      "boot_command": [
+        "<esc><wait>",
+        "install <wait>",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+        "debian-installer=en_US.UTF-8 <wait>",
+        "auto <wait>",
+        "locale=en_US.UTF-8 <wait>",
+        "keyboard-configuration/xkb-keymap=fr <wait>",
+        "netcfg/get_hostname=deb10 <wait>",
+        "netcfg/get_domain= <wait>",
+        "debconf/frontend=noninteractive <wait>",
+        "grub-installer/bootdev=/dev/sda <wait>",
+        "<enter><wait>"
+      ],
+      "shutdown_command": "sudo shutdown -P now",
+      "http_directory": "http_debian10",
+      "ssh_username": "debian",
+      "ssh_password": "{{user `ssh-password`}}",
+      "ssh_pty": true,
+      "ssh_timeout": "30m"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+	"sudo truncate -s 0 /etc/machine-id",
+	"echo 'Packer Template Build: DONE'"
+      ]
+    }
+  ]
+}
+

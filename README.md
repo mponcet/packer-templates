@@ -1,4 +1,4 @@
-# Create Ubuntu 20.04 template for VMware vSphere with Packer
+# Packer templates for VMware vSphere
 
 ## Build
 
@@ -6,6 +6,19 @@
 $ cp variables.json.tmpl variables.json
 $ vim variables.json
 $ packer build -var-file variables.json ubuntu-20.04.json 
+```
+
+## Security
+
+### Debian
+
+Default password : debian
+
+Consider changing root and user password in http_debian10/preseed.cfg :
+
+```
+$ mkpasswd -m sha-512
+$ vim http_debian10/preseed.cfg
 ```
 
 ## Troubleshooting
