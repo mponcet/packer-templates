@@ -10,11 +10,22 @@ $ packer build -var-file variables.json ubuntu-20.04.json
 
 ## Security
 
+### Ubuntu
+
+Default credentials: ubuntu:ubuntu
+
+Change user password in http_ubuntu2004/preseed.cfg :
+
+```
+$ mkpasswd -m sha-512
+$ vim http_ubuntu2004/user-data
+```
+
 ### Debian
 
-Default password : debian
+Default credentials : debian:debian
 
-Consider changing root and user password in http_debian10/preseed.cfg :
+Change root and user password in http_debian10/preseed.cfg :
 
 ```
 $ mkpasswd -m sha-512
